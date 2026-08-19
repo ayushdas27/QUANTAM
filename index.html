@@ -1,0 +1,1857 @@
+<!DOCTYPE html>
+
+<html class="dark" lang="en"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, viewport-fit=cover" name="viewport"/>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&amp;family=IBM+Plex+Mono:wght@400;500;600&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@20..48,100..700,0..1,-50..200" rel="stylesheet"/>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<!-- Chart.js -->
+<script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+<script id="tailwind-config">
+tailwind.config={
+    darkMode:"class",
+    theme:{
+        extend:{
+            colors:{
+                "inverse-on-surface":"var(--inverse-on-surface)",
+                "surface":"var(--surface)",
+                "on-tertiary-fixed-variant":"var(--on-tertiary-fixed-variant)",
+                "surface-variant":"var(--surface-variant)",
+                "tertiary":"var(--tertiary)",
+                "surface-bright":"var(--surface-bright)",
+                "secondary-container":"var(--secondary-container)",
+                "on-secondary-fixed":"var(--on-secondary-fixed)",
+                "tertiary-container":"var(--tertiary-container)",
+                "surface-container-high":"var(--surface-container-high)",
+                "primary-container":"var(--primary-container)",
+                "on-error-container":"var(--on-error-container)",
+                "primary-fixed":"var(--primary-fixed)",
+                "primary-fixed-dim":"var(--primary-fixed-dim)",
+                "on-primary":"var(--on-primary)",
+                "secondary-fixed":"var(--secondary-fixed)",
+                "inverse-surface":"var(--inverse-surface)",
+                "secondary":"var(--secondary)",
+                "background":"var(--background)",
+                "on-error":"var(--on-error)",
+                "surface-container":"var(--surface-container)",
+                "tertiary-fixed":"var(--tertiary-fixed)",
+                "on-secondary-fixed-variant":"var(--on-secondary-fixed-variant)",
+                "secondary-fixed-dim":"var(--secondary-fixed-dim)",
+                "on-primary-container":"var(--on-primary-container)",
+                "on-primary-fixed-variant":"var(--on-primary-fixed-variant)",
+                "on-background":"var(--on-background)",
+                "surface-container-lowest":"var(--surface-container-lowest)",
+                "surface-container-low":"var(--surface-container-low)",
+                "error":"var(--error)",
+                "primary":"var(--primary)",
+                "on-primary-fixed":"var(--on-primary-fixed)",
+                "on-tertiary":"var(--on-tertiary)",
+                "on-surface-variant":"var(--on-surface-variant)",
+                "outline":"var(--outline)",
+                "on-secondary":"var(--on-secondary)",
+                "on-secondary-container":"var(--on-secondary-container)",
+                "inverse-primary":"var(--inverse-primary)",
+                "surface-container-highest":"var(--surface-container-highest)",
+                "outline-variant":"var(--outline-variant)",
+                "surface-tint":"var(--surface-tint)",
+                "on-surface":"var(--on-surface)",
+                "tertiary-fixed-dim":"var(--tertiary-fixed-dim)",
+                "on-tertiary-fixed":"var(--on-tertiary-fixed)",
+                "surface-dim":"var(--surface-dim)",
+                "on-tertiary-container":"var(--on-tertiary-container)",
+                "error-container":"var(--error-container)"
+            },
+            borderRadius:{DEFAULT:"0.125rem",lg:"0.25rem",xl:"0.5rem",full:"0.75rem"},
+            spacing:{sm:"8px",md:"16px",lg:"24px",grid_columns:"12",xs:"4px",base:"4px",gutter:"16px",xl:"48px",margin:"24px"},
+            fontFamily:{
+                "body-sm":["Inter", "sans-serif"],
+                "data-lg":["IBM Plex Mono", "monospace"],
+                "body-lg":["Inter", "sans-serif"],
+                "headline-lg":["Inter", "sans-serif"],
+                "body-md":["Inter", "sans-serif"],
+                "headline-md":["Inter", "sans-serif"],
+                "data-md":["IBM Plex Mono", "monospace"],
+                "data-sm":["IBM Plex Mono", "monospace"],
+                display:["Inter", "sans-serif"]
+            },
+            fontSize:{
+                "body-sm":["14px",{lineHeight:"1.5",fontWeight:"400"}],
+                "data-lg":["16px",{lineHeight:"1.4",fontWeight:"500"}],
+                "body-lg":["18px",{lineHeight:"1.6",fontWeight:"400"}],
+                "headline-lg":["32px",{lineHeight:"1.2",fontWeight:"600"}],
+                "body-md":["16px",{lineHeight:"1.5",fontWeight:"400"}],
+                "headline-md":["24px",{lineHeight:"1.3",fontWeight:"600"}],
+                "data-md":["14px",{lineHeight:"1.4",fontWeight:"400"}],
+                "data-sm":["12px",{lineHeight:"1.2",fontWeight:"400"}],
+                display:["48px",{lineHeight:"1.1",letterSpacing:"-0.02em",fontWeight:"700"}]
+            }
+        }
+    }
+}
+</script>
+<style>
+  :root {
+      /* Light Theme Variables */
+      --inverse-on-surface: #f4eff4;
+      --surface: #fdf7fd;
+      --on-tertiary-fixed-variant: #594400;
+      --surface-variant: #e7e0eb;
+      --tertiary: #7d5700;
+      --surface-bright: #fdf7fd;
+      --secondary-container: #e8def8;
+      --on-secondary-fixed: #1d192b;
+      --tertiary-container: #ffdea4;
+      --surface-container-high: #ece6eb;
+      --primary-container: #eaddff;
+      --on-error-container: #410002;
+      --primary-fixed: #eaddff;
+      --primary-fixed-dim: #d0bcff;
+      --on-primary: #ffffff;
+      --secondary-fixed: #e8def8;
+      --inverse-surface: #313033;
+      --secondary: #625b71;
+      --background: #fdf7fd;
+      --on-error: #ffffff;
+      --surface-container: #f3edf2;
+      --tertiary-fixed: #ffdea4;
+      --on-secondary-fixed-variant: #4a4458;
+      --secondary-fixed-dim: #ccc2dc;
+      --on-primary-container: #21005d;
+      --on-primary-fixed-variant: #4f378b;
+      --on-background: #1c1b1f;
+      --surface-container-lowest: #ffffff;
+      --surface-container-low: #f7f2f7;
+      --error: #ba1a1a;
+      --primary: #6750a4;
+      --on-primary-fixed: #21005d;
+      --on-tertiary: #ffffff;
+      --on-surface-variant: #49454f;
+      --outline: #79747e;
+      --on-secondary: #ffffff;
+      --on-secondary-container: #1d192b;
+      --inverse-primary: #d0bcff;
+      --surface-container-highest: #e6e0e5;
+      --outline-variant: #cac4d0;
+      --surface-tint: #6750a4;
+      --on-surface: #1c1b1f;
+      --tertiary-fixed-dim: #efb848;
+      --on-tertiary-fixed: #271900;
+      --surface-dim: #ded8dd;
+      --on-tertiary-container: #271900;
+      --error-container: #ffdad6;
+  }
+  
+  html.dark {
+      /* Dark Theme Variables */
+      --inverse-on-surface: #322f35;
+      --surface: #141218;
+      --on-tertiary-fixed-variant: #594400;
+      --surface-variant: #36343a;
+      --tertiary: #e7c365;
+      --surface-bright: #3b383e;
+      --secondary-container: #4d4465;
+      --on-secondary-fixed: #1f1635;
+      --tertiary-container: #c9a74d;
+      --surface-container-high: #2b292f;
+      --primary-container: #6750a4;
+      --on-error-container: #ffdad6;
+      --primary-fixed: #e9ddff;
+      --primary-fixed-dim: #cfbcff;
+      --on-primary: #381e72;
+      --secondary-fixed: #e9ddff;
+      --inverse-surface: #e6e0e9;
+      --secondary: #cdc0e9;
+      --background: #141218;
+      --on-error: #690005;
+      --surface-container: #211f24;
+      --tertiary-fixed: #ffdf93;
+      --on-secondary-fixed-variant: #4b4263;
+      --secondary-fixed-dim: #cdc0e9;
+      --on-primary-container: #e0d2ff;
+      --on-primary-fixed-variant: #4f378a;
+      --on-background: #e6e0e9;
+      --surface-container-lowest: #0f0d13;
+      --surface-container-low: #1d1b20;
+      --error: #ffb4ab;
+      --primary: #cfbcff;
+      --on-primary-fixed: #22005d;
+      --on-tertiary: #3e2e00;
+      --on-surface-variant: #cbc4d2;
+      --outline: #948e9c;
+      --on-secondary: #342b4b;
+      --on-secondary-container: #bfb2da;
+      --inverse-primary: #6750a4;
+      --surface-container-highest: #36343a;
+      --outline-variant: #494551;
+      --surface-tint: #cfbcff;
+      --on-surface: #e6e0e9;
+      --tertiary-fixed-dim: #e7c365;
+      --on-tertiary-fixed: #241a00;
+      --surface-dim: #141218;
+      --on-tertiary-container: #503d00;
+      --error-container: #93000a;
+  }
+
+  @layer base {
+      html {
+          scroll-behavior: smooth;
+      }
+      body {
+          overscroll-behavior: none;
+      }
+      .pb-safe {
+          padding-bottom: env(safe-area-inset-bottom, 0px);
+      }
+      .pt-safe {
+          padding-top: env(safe-area-inset-top, 0px);
+      }
+      section {
+          scroll-margin-top: 80px;
+      }
+  }
+  
+  ::-webkit-scrollbar {
+      display: none;
+  }
+  
+  .nav-link.active {
+      color: var(--primary);
+      font-weight: 600;
+  }
+  
+  .theme-transition, .theme-transition * {
+      transition: background-color 300ms ease, color 300ms ease, border-color 300ms ease, box-shadow 300ms ease, fill 300ms ease;
+  }
+  
+  body {
+    min-height: max(884px, 100dvh);
+  }
+  
+  /* Active theme button styling */
+  .theme-btn.active {
+      background-color: var(--surface-variant);
+      color: var(--primary);
+  }
+  .theme-btn:not(.active) {
+      color: var(--on-surface-variant);
+  }
+
+  /* Circuit Tooltip & Hover effects */
+  .circuit-gate {
+      transition: transform 0.2s ease, border-color 0.2s ease, box-shadow 0.2s ease, opacity 0.5s ease;
+      cursor: pointer;
+  }
+  .circuit-gate:hover {
+      transform: scale(1.05);
+      border-width: 2px;
+      box-shadow: 0 0 8px currentColor;
+      z-index: 30;
+  }
+  .circuit-gate .tooltip {
+      visibility: hidden;
+      opacity: 0;
+      transition: opacity 0.2s;
+      position: absolute;
+      bottom: 120%;
+      left: 50%;
+      transform: translateX(-50%);
+      white-space: nowrap;
+      z-index: 40;
+  }
+  .circuit-gate:hover .tooltip {
+      visibility: visible;
+      opacity: 1;
+  }
+
+  /* Qubit row highlight */
+  .qubit-row {
+      transition: background-color 0.2s ease;
+  }
+  .qubit-row:hover {
+      background-color: var(--surface-container);
+  }
+
+  /* Pulse Animation Container */
+  .pulse-container {
+      position: absolute;
+      top: 0;
+      bottom: 0;
+      width: 100%;
+      pointer-events: none;
+      z-index: 25;
+      overflow: hidden;
+  }
+  
+  .traveling-pulse {
+      position: absolute;
+      height: 2px;
+      width: 40px;
+      background: linear-gradient(90deg, transparent, var(--primary) 50%, #fff 100%);
+      box-shadow: 0 0 8px 2px var(--primary);
+      opacity: 0;
+      transform: translateX(-100%);
+      transition: opacity 0.2s ease;
+  }
+
+  /* Active stage animation */
+  .stage-active {
+      border-color: currentColor !important;
+      border-width: 2px !important;
+      box-shadow: 0 0 12px currentColor !important;
+      transform: scale(1.05);
+      z-index: 30;
+  }
+  
+  .stage-passed {
+      box-shadow: 0 0 4px currentColor !important;
+      opacity: 0.8;
+  }
+</style>
+<script>
+    function updateTheme(theme) {
+        const html = document.documentElement;
+        let isDark = false;
+        
+        if (theme === 'system') {
+            isDark = window.matchMedia('(prefers-color-scheme: dark)').matches;
+        } else {
+            isDark = theme === 'dark';
+        }
+        
+        if (isDark) {
+            html.classList.add('dark');
+            html.classList.remove('light');
+        } else {
+            html.classList.remove('dark');
+            html.classList.add('light');
+        }
+        
+        localStorage.setItem('theme', theme);
+        
+        // Update UI toggles
+        document.querySelectorAll('.theme-btn').forEach(btn => {
+            if (btn.dataset.theme === theme) {
+                btn.classList.add('active');
+            } else {
+                btn.classList.remove('active');
+            }
+        });
+        
+        // Trigger chart re-render if charts exist
+        if (typeof window.updateChartColors === 'function') {
+            window.updateChartColors(isDark);
+        }
+    }
+
+    // Initialize theme
+    const savedTheme = localStorage.getItem('theme') || 'system';
+    const initialIsDark = savedTheme === 'system' 
+        ? window.matchMedia('(prefers-color-scheme: dark)').matches 
+        : savedTheme === 'dark';
+        
+    if(initialIsDark) {
+        document.documentElement.classList.add('dark');
+    } else {
+        document.documentElement.classList.remove('dark');
+    }
+    
+    // Listen for system theme changes
+    window.matchMedia('(prefers-color-scheme: dark)').addEventListener('change', e => {
+        if (localStorage.getItem('theme') === 'system') {
+            updateTheme('system');
+        }
+    });
+    
+    document.addEventListener('DOMContentLoaded', () => {
+        updateTheme(localStorage.getItem('theme') || 'system');
+        
+        // Setup toggle listeners
+        document.querySelectorAll('.theme-btn').forEach(btn => {
+            btn.addEventListener('click', (e) => {
+                updateTheme(e.currentTarget.dataset.theme);
+            });
+        });
+        
+        // Mobile menu toggle
+        const menuBtn = document.getElementById('mobile-menu-btn');
+        const mobileMenu = document.getElementById('mobile-menu');
+        if(menuBtn && mobileMenu) {
+            menuBtn.addEventListener('click', () => {
+                mobileMenu.classList.toggle('hidden');
+            });
+        }
+    });
+</script>
+</head>
+<body class="bg-surface text-on-surface font-body-md theme-transition">
+<header class="fixed top-0 inset-x-0 z-50 bg-surface/80 backdrop-blur-xl pt-safe shadow-[0_1px_8px_rgba(0,0,0,0.04)] theme-transition">
+<div class="h-20 px-margin flex items-center justify-between gap-md">
+<div class="flex flex-col min-w-0">
+<span class="font-headline-md text-headline-md leading-none truncate text-primary">QAOA × RENEWABLE ENERGY</span>
+<span class="font-data-sm text-data-sm text-on-surface-variant uppercase tracking-wider">Quantum Computing Research Project</span>
+</div>
+<div class="hidden lg:flex items-center gap-lg">
+<nav class="flex gap-md text-on-surface-variant" data-active-classes="text-primary font-bold">
+<a class="font-data-sm text-data-sm hover:text-on-surface transition-colors" data-path="home" href="#home">HOME</a>
+<a class="font-data-sm text-data-sm hover:text-on-surface transition-colors" data-path="about" href="#about">ABOUT</a>
+<a class="font-data-sm text-data-sm hover:text-on-surface transition-colors" data-path="problem" href="#problem">PROBLEM</a>
+<a class="font-data-sm text-data-sm hover:text-on-surface transition-colors" data-path="data" href="#data">DATA</a>
+<a class="font-data-sm text-data-sm hover:text-on-surface transition-colors" data-path="qubo" href="#qubo">QUBO</a>
+<a class="font-data-sm text-data-sm hover:text-on-surface transition-colors" data-path="qaoa" href="#qaoa">QAOA</a>
+<a class="font-data-sm text-data-sm hover:text-on-surface transition-colors" data-path="results" href="#results">RESULTS</a>
+</nav>
+<div class="h-8 w-[1px] bg-outline-variant theme-transition"></div>
+<div class="flex items-center gap-md">
+<span class="font-data-sm text-data-sm text-on-surface-variant tracking-widest uppercase">CSE AI/ML · SEC B · 2026–2030</span>
+<div class="flex bg-surface-container rounded-full p-1 border border-outline-variant/30 theme-transition">
+<button class="theme-btn w-8 h-8 rounded-full flex items-center justify-center transition-colors" data-theme="light" title="Light Mode">
+<span class="material-symbols-outlined text-[18px]">light_mode</span>
+</button>
+<button class="theme-btn w-8 h-8 rounded-full flex items-center justify-center transition-colors" data-theme="system" title="System Mode">
+<span class="material-symbols-outlined text-[18px]">contrast</span>
+</button>
+<button class="theme-btn w-8 h-8 rounded-full flex items-center justify-center transition-colors" data-theme="dark" title="Dark Mode">
+<span class="material-symbols-outlined text-[18px]">dark_mode</span>
+</button>
+</div>
+</div>
+</div>
+<div class="lg:hidden flex items-center gap-2">
+<div class="flex bg-surface-container rounded-full p-1 border border-outline-variant/30 theme-transition">
+<button class="theme-btn w-8 h-8 rounded-full flex items-center justify-center transition-colors" data-theme="light" title="Light Mode">
+<span class="material-symbols-outlined text-[16px]">light_mode</span>
+</button>
+<button class="theme-btn w-8 h-8 rounded-full flex items-center justify-center transition-colors" data-theme="system" title="System Mode">
+<span class="material-symbols-outlined text-[16px]">contrast</span>
+</button>
+<button class="theme-btn w-8 h-8 rounded-full flex items-center justify-center transition-colors" data-theme="dark" title="Dark Mode">
+<span class="material-symbols-outlined text-[16px]">dark_mode</span>
+</button>
+</div>
+<button class="w-10 h-10 flex items-center justify-center text-on-surface-variant" id="mobile-menu-btn">
+<span class="material-symbols-outlined">menu</span>
+</button>
+</div>
+</div>
+<!-- Mobile Menu Dropdown -->
+<div class="lg:hidden hidden bg-surface border-b border-outline-variant/30 px-margin py-md flex-col gap-md absolute w-full shadow-lg shadow-black/10 theme-transition" id="mobile-menu">
+<span class="font-data-sm text-data-sm text-on-surface-variant tracking-widest uppercase border-b border-outline-variant/30 pb-2 mb-2 block theme-transition">CSE AI/ML · SEC B · 2026–2030</span>
+<nav class="flex flex-col gap-md text-on-surface">
+<a class="font-data-sm text-data-sm transition-colors block" href="#home">HOME</a>
+<a class="font-data-sm text-data-sm transition-colors block" href="#about">ABOUT</a>
+<a class="font-data-sm text-data-sm transition-colors block" href="#problem">PROBLEM</a>
+<a class="font-data-sm text-data-sm transition-colors block" href="#data">DATA</a>
+<a class="font-data-sm text-data-sm transition-colors block" href="#qubo">QUBO</a>
+<a class="font-data-sm text-data-sm transition-colors block" href="#qaoa">QAOA</a>
+<a class="font-data-sm text-data-sm transition-colors block" href="#results">RESULTS</a>
+</nav>
+</div>
+</header>
+<main class="flex flex-col relative w-full pt-20 bg-surface min-h-screen theme-transition">
+<div class="flex flex-col w-full relative">
+<!-- Inline Data & Scripts -->
+<script>
+        let RE_DATA = {
+            "x1": { name: "Rajasthan", gwh: 40585.84, twh: 40.58584, id: "RJ" },
+            "x2": { name: "Gujarat", gwh: 29541.54, twh: 29.54154, id: "GJ" },
+            "x3": { name: "Karnataka", gwh: 24121.68, twh: 24.12168, id: "KA" },
+            "x4": { name: "Tamil Nadu", gwh: 26333.24, twh: 26.33324, id: "TN" },
+            "x5": { name: "Andhra Pradesh", gwh: 15567.18, twh: 15.56718, id: "AP" }
+        };
+
+        // Calculate Totals
+        for (let key in RE_DATA) {
+            RE_DATA[key].total = parseFloat((RE_DATA[key].twh).toFixed(2));
+        }
+
+        let currentSort = { col: 'twh', desc: true };
+        let currentFilter = 'All';
+
+        const getSortedKeys = () => {
+            const keys = Object.keys(RE_DATA);
+            keys.sort((a, b) => {
+                let valA = RE_DATA[a][currentSort.col];
+                let valB = RE_DATA[b][currentSort.col];
+                if (currentSort.col === 'name') {
+                    return currentSort.desc ? valB.localeCompare(valA) : valA.localeCompare(valB);
+                }
+                return currentSort.desc ? valB - valA : valA - valB;
+            });
+            return keys;
+        };
+
+        // Generate combinations C(5,k)
+        let selectionCount = 2;
+        let combinations = [];
+        let OPTIMAL = null;
+
+        function updateCombinations() {
+            const keys = Object.keys(RE_DATA);
+            combinations = [];
+            
+            const getCombinations = (arr, k) => {
+                const results = [];
+                const combine = (start, combo) => {
+                    if (combo.length === k) {
+                        results.push([...combo]);
+                        return;
+                    }
+                    for (let i = start; i < arr.length; i++) {
+                        combo.push(arr[i]);
+                        combine(i + 1, combo);
+                        combo.pop();
+                    }
+                }
+                combine(0, []);
+                return results;
+            };
+
+            const combos = getCombinations(keys, selectionCount);
+            
+            combos.forEach(comboKeys => {
+                let totalEnergy = 0;
+                let stateStr = '|';
+                for(let i=1; i<=5; i++) {
+                    stateStr += comboKeys.includes('x'+i) ? '1' : '0';
+                }
+                stateStr += '⟩';
+
+                comboKeys.forEach(k => totalEnergy += RE_DATA[k].twh);
+                
+                combinations.push({
+                    state: stateStr,
+                    regions: comboKeys.map(k => RE_DATA[k].name),
+                    keys: comboKeys,
+                    total: parseFloat(totalEnergy.toFixed(2))
+                });
+            });
+
+            // Sort descending
+            combinations.sort((a, b) => b.total - a.total);
+            OPTIMAL = combinations.length > 0 ? combinations[0] : null;
+        }
+
+        updateCombinations();
+
+        // Format number helper
+        const fmt = (num) => parseFloat(num).toFixed(2);
+    </script>
+<!-- Hero Section -->
+<section class="px-margin py-xl lg:py-[120px] bg-surface flex flex-col items-start gap-lg border-b border-outline-variant/30 relative overflow-hidden theme-transition" id="home">
+<div class="absolute top-0 right-0 w-full h-full opacity-5 pointer-events-none theme-transition" style="background-image: radial-gradient(circle at 80% 20%, var(--primary) 0%, transparent 50%);"></div>
+<div class="flex flex-col gap-sm relative z-10 w-full max-w-4xl">
+<span class="font-data-sm text-data-sm text-primary uppercase tracking-widest">SRM University — CSE / AI &amp; ML Research Project</span>
+<h1 class="font-headline-lg text-headline-lg-mobile lg:text-display text-on-surface text-balance">
+                Quantum Optimization for Renewable Energy
+            </h1>
+<p class="font-body-lg text-body-lg text-on-surface-variant max-w-3xl mt-sm">
+                Modeling renewable-energy portfolio selection using real data, QUBO, and QAOA.
+            </p>
+</div>
+<div class="grid grid-cols-2 lg:grid-cols-4 w-full gap-[1px] bg-outline-variant/30 relative z-10 mt-md theme-transition">
+<div class="bg-surface p-md flex flex-col gap-xs theme-transition">
+<span class="font-data-sm text-data-sm text-on-surface-variant uppercase">Candidate Regions</span>
+<span class="font-data-lg text-data-lg text-on-surface">5</span>
+</div>
+<div class="bg-surface p-md flex flex-col gap-xs theme-transition">
+<span class="font-data-sm text-data-sm text-on-surface-variant uppercase">Classical Optimum</span>
+<span class="font-data-lg text-data-lg text-on-surface">Rajasthan + Gujarat</span>
+</div>
+<div class="bg-surface p-md flex flex-col gap-xs theme-transition">
+<span class="font-data-sm text-data-sm text-on-surface-variant uppercase">Total Generation</span>
+<span class="font-data-lg text-data-lg text-on-surface text-tertiary">70.13 TWh/year</span>
+</div>
+<div class="bg-surface p-md flex flex-col gap-xs theme-transition">
+<span class="font-data-sm text-data-sm text-on-surface-variant uppercase">QAOA Probability</span>
+<span class="font-data-lg text-data-lg text-on-surface text-primary">61.2%</span>
+</div>
+</div>
+<div class="flex flex-wrap gap-md mt-sm relative z-10">
+<a class="px-lg py-sm bg-primary text-on-primary font-data-md text-data-md uppercase tracking-wide hover:bg-primary-fixed transition-colors inline-flex items-center gap-xs" href="#problem">
+                Explore Methodology
+                <span class="material-symbols-outlined text-[18px]">arrow_downward</span>
+</a>
+<a class="px-lg py-sm border border-outline text-on-surface font-data-md text-data-md uppercase tracking-wide hover:bg-surface-variant transition-colors inline-flex items-center gap-xs theme-transition" href="#results">
+                View Results
+            </a>
+</div>
+</section>
+<!-- About Section -->
+<section class="px-margin py-xl bg-surface-container-low theme-transition border-b border-outline-variant/30" id="about">
+<div class="max-w-7xl mx-auto w-full flex flex-col gap-md">
+<h2 class="font-headline-lg text-headline-lg-mobile lg:text-headline-lg text-on-surface uppercase tracking-wide">ABOUT</h2>
+<div class="grid grid-cols-1 lg:grid-cols-2 gap-lg mt-md">
+<div class="flex flex-col gap-sm bg-surface p-md border border-outline-variant/50 theme-transition">
+<h3 class="font-data-md text-on-surface uppercase border-b border-outline-variant/50 pb-xs">About the Project</h3>
+<p class="font-body-md text-on-surface-variant">This project studies how renewable-energy sites can be selected using optimization methods.</p>
+<h3 class="font-data-md text-on-surface uppercase border-b border-outline-variant/50 pb-xs mt-sm">Methodology</h3>
+<p class="font-body-md text-on-surface-variant">Real data → binary variables → QUBO → 5-qubit QAOA → simulation → result</p>
+</div>
+<div class="flex flex-col gap-sm bg-surface p-md border border-outline-variant/50 theme-transition">
+<h3 class="font-data-md text-on-surface uppercase border-b border-outline-variant/50 pb-xs">Scope</h3>
+<p class="font-body-md text-on-surface-variant">The example uses 5 candidate regions and selects exactly 2 regions for maximum annual wind + solar generation.</p>
+<h3 class="font-data-md text-on-surface uppercase border-b border-outline-variant/50 pb-xs mt-sm">Limitation</h3>
+<p class="font-body-md text-on-surface-variant">This is a classical simulation of QAOA for demonstration and learning purposes. This is a proof-of-concept and does not claim quantum advantage.</p>
+</div>
+</div>
+</div>
+</section>
+<!-- Problem Section -->
+<section class="px-margin py-xl bg-surface-container-lowest theme-transition" id="problem">
+<div class="max-w-7xl mx-auto w-full flex flex-col gap-lg">
+<div class="flex flex-col gap-xs border-b border-outline-variant/50 pb-sm theme-transition">
+<h2 class="font-headline-lg text-headline-lg-mobile lg:text-headline-lg text-on-surface uppercase tracking-wide">01 — THE PROBLEM</h2>
+<p class="font-body-lg text-on-surface-variant">Why renewable-energy portfolio selection is an optimization problem.</p>
+</div>
+<div class="grid grid-cols-1 lg:grid-cols-2 gap-xl items-start">
+<div class="flex flex-col gap-md">
+<p class="font-body-md text-on-surface-variant leading-relaxed">
+                        The challenge isn't just generating clean energy, but coordinating resources. This involves balancing solar and wind, managing battery storage, predicting demand, and respecting grid constraints like budget, generation potential, geographic variation, transmission capacities, and available storage.
+                    </p>
+<p class="font-body-md text-on-surface-variant leading-relaxed">
+                        Key questions arise: Which sites to develop? How much power to generate? When to charge/discharge? As the scale increases, this becomes a combinatorial search space.
+                    </p>
+<div class="bg-primary/5 border border-primary/20 p-md mt-sm theme-transition">
+<h3 class="font-data-md text-primary uppercase mb-xs">Research Question</h3>
+<p class="font-body-md text-on-surface italic">"Can quantum optimization methods such as QAOA remain useful as renewable-energy planning problems scale to hundreds or thousands of decision variables?"</p>
+</div>
+<div class="flex flex-col gap-xs mt-sm">
+<h3 class="font-data-md text-on-surface uppercase">Why Optimization Is Needed</h3>
+<p class="font-body-sm text-on-surface-variant">
+                            For n=5 regions picking k=2, the total combinations C(5,2) = 10 is trivial to brute-force classically. This is a proof-of-concept for scalability. However, this research explores formulation and algorithmic scaling. As N grows (e.g., micro-grids across hundreds of districts), the combinatorial space explodes. We investigate if the QUBO formulation and QAOA solver can efficiently handle this constrained search space.
+                        </p>
+</div>
+</div>
+<div class="bg-surface border border-outline-variant/50 p-lg flex flex-col gap-lg theme-transition">
+<div class="flex flex-col gap-sm">
+<h3 class="font-data-sm text-on-surface-variant uppercase tracking-wider">Decision Variables</h3>
+<p class="font-body-sm text-on-surface-variant">We introduce <span class="font-data-sm">x₁</span> to <span class="font-data-sm">x₅</span> as binary variables where <span class="font-data-sm bg-surface-variant px-1">0 = not selected</span> and <span class="font-data-sm bg-surface-variant px-1">1 = selected</span>.</p>
+<div class="flex flex-wrap gap-2 font-data-md text-on-surface mt-xs">
+<span class="px-2 py-1 bg-surface-container border border-outline-variant theme-transition">x₁: Rajasthan</span>
+<span class="px-2 py-1 bg-surface-container border border-outline-variant theme-transition">x₂: Gujarat</span>
+<span class="px-2 py-1 bg-surface-container border border-outline-variant theme-transition">x₃: Karnataka</span>
+<span class="px-2 py-1 bg-surface-container border border-outline-variant theme-transition">x₄: Tamil Nadu</span>
+<span class="px-2 py-1 bg-surface-container border border-outline-variant theme-transition">x₅: Andhra Pradesh</span>
+</div>
+</div>
+<div class="flex flex-col gap-sm border-t border-outline-variant/50 pt-md theme-transition">
+<h3 class="font-data-sm text-on-surface-variant uppercase tracking-wider">Constraint</h3>
+<p class="font-body-sm text-on-surface-variant">Exactly two regions must be selected.</p>
+<div class="bg-surface-container-low p-md border border-outline-variant flex justify-center theme-transition">
+<span class="font-data-lg text-primary tracking-widest text-xl">x₁ + x₂ + x₃ + x₄ + x₅ = 2</span>
+</div>
+</div>
+<div class="flex flex-col gap-sm border-t border-outline-variant/50 pt-md theme-transition">
+<h3 class="font-data-sm text-on-surface-variant uppercase tracking-wider">Objective</h3>
+<p class="font-body-sm text-on-surface-variant">Maximize total energy yield (Eᵢ).</p>
+<div class="bg-surface-container-low p-md border border-outline-variant flex justify-center theme-transition">
+<span class="font-data-lg text-tertiary tracking-widest text-xl">MAXIMIZE Σ Eᵢxᵢ</span>
+</div>
+</div>
+</div>
+</div>
+</div>
+</section>
+<!-- Data Section -->
+<section class="px-margin py-xl bg-surface border-t border-outline-variant/30 theme-transition" id="data">
+<div class="max-w-7xl mx-auto w-full flex flex-col gap-lg">
+<div class="flex flex-col gap-xs border-b border-outline-variant/50 pb-sm theme-transition">
+<h2 class="font-headline-lg text-headline-lg-mobile lg:text-headline-lg text-on-surface uppercase tracking-wide">02 — DATASET</h2>
+<p class="font-body-lg text-on-surface-variant">Renewable-energy generation data used in the optimization model.</p>
+</div>
+<div class="flex flex-col lg:flex-row gap-xl items-start w-full mt-md">
+<div class="flex-1 flex flex-col gap-md w-full">
+<div class="flex justify-between items-end border-b border-outline-variant/50 pb-sm theme-transition">
+<h3 class="font-data-md text-on-surface uppercase">Generation Potential</h3>
+<div class="flex gap-2" id="data-filters">
+<button class="font-data-sm px-2 py-1 border border-outline-variant bg-surface-variant text-on-surface transition-colors" data-filter="All">All</button>
+</div>
+</div>
+<div class="w-full overflow-x-auto border border-outline-variant/50 theme-transition">
+<table class="w-full text-left border-collapse" id="dataset-table">
+<thead>
+<tr class="bg-surface-container-low border-b border-outline-variant/50 theme-transition">
+<th class="p-sm font-data-sm text-on-surface-variant uppercase font-medium cursor-pointer hover:text-primary transition-colors" data-sort="key">Var <span class="text-[10px] opacity-50">▼</span></th>
+<th class="p-sm font-data-sm text-on-surface-variant uppercase font-medium cursor-pointer hover:text-primary transition-colors" data-sort="name">Region <span class="text-[10px] opacity-50"></span></th>
+<th class="p-sm font-data-sm text-on-surface-variant uppercase font-medium text-right cursor-pointer hover:text-primary transition-colors" data-sort="gwh">Wind + Solar Generation (GWh/year) <span class="text-[10px] opacity-50"></span></th>
+<th class="p-sm font-data-sm text-primary uppercase font-medium text-right cursor-pointer hover:text-primary transition-colors" data-sort="twh">Wind + Solar Generation (TWh/year) <span class="text-[10px] opacity-50"></span></th>
+</tr>
+</thead>
+<tbody class="font-data-md text-on-surface" id="dataset-tbody">
+<!-- Populated by JS -->
+</tbody>
+</table>
+</div>
+<p class="font-body-sm text-on-surface-variant italic mt-sm">
+                        * Note: This dataset forms the coefficients (Eᵢ) for the objective function in the QUBO formulation. Data Source: Central Electricity Authority (CEA), General Review 2024, Table 4.7.
+                    </p>
+<p class="font-body-sm text-on-surface-variant mt-sm">
+                        Observation: Rajasthan has the highest generation potential, followed by Gujarat. Selecting these two forms the classical optimum for our k=2 constraint.
+                    </p>
+</div>
+<div class="w-full lg:w-[400px] flex flex-col gap-xl">
+<!-- Dynamic Bar Chart Visual -->
+<div class="flex flex-col gap-sm border border-outline-variant/50 p-md bg-surface-container-lowest theme-transition">
+<div class="text-center">
+<h3 class="font-data-sm text-on-surface-variant uppercase tracking-wider">Wind + Solar Generation</h3>
+<p class="font-data-sm text-on-surface-variant text-[10px]">Annual generation by region</p>
+<p class="font-data-sm text-on-surface-variant text-[10px]">TWh / year</p>
+</div>
+<div class="h-48 flex items-end justify-around gap-2 pt-4 border-b border-l border-outline-variant/50 pb-1 pl-1 relative w-full" id="bar-chart-container">
+<!-- Y-Axis labels and gridlines generated by JS -->
+<!-- Bars injected via JS -->
+</div>
+<div class="flex justify-center gap-md mt-xs">
+<div class="flex items-center gap-1"><span class="w-3 h-3 bg-tertiary rounded-full inline-block"></span><span class="font-data-sm text-[10px] text-on-surface">Wind + Solar Generation</span></div>
+</div>
+</div>
+<!-- Ranked List -->
+<div class="flex flex-col gap-sm border border-outline-variant/50 p-md bg-surface-container-lowest theme-transition">
+<h3 class="font-data-sm text-on-surface-variant uppercase tracking-wider text-center border-b border-outline-variant/50 pb-sm">Total Generation Rank</h3>
+<div class="flex flex-col gap-2 mt-xs" id="ranked-list-container">
+<!-- Ranks injected via JS -->
+</div>
+</div>
+</div>
+</div>
+</div>
+</section>
+<!-- Classical Search & Interactive Selectors -->
+<section class="px-margin py-xl bg-surface-container-low border-t border-outline-variant/30 theme-transition">
+<div class="max-w-7xl mx-auto w-full flex flex-col gap-lg">
+<div class="flex flex-col gap-xs">
+<h2 class="font-headline-lg text-headline-lg-mobile lg:text-headline-lg text-on-surface">Classical Space Search</h2>
+<p class="font-body-md text-body-md text-on-surface-variant">Exploring all possible valid portfolios. In a real scenario with N=100, calculating C(100,2)=4,950 is trivial, but C(100,50) explodes beyond classical limits, motivating quantum approaches.</p>
+</div>
+<div class="grid grid-cols-1 lg:grid-cols-12 gap-lg mt-md">
+<!-- Interactive Selector -->
+<div class="col-span-1 lg:col-span-5 flex flex-col gap-md border border-outline-variant p-lg bg-surface theme-transition">
+<h3 class="font-data-md text-data-md text-on-surface uppercase flex items-center justify-between border-b border-outline-variant/50 pb-sm theme-transition">
+                        Portfolio Selector
+                        <div class="flex gap-2">
+<button class="k-selector px-2 py-1 text-xs border border-outline-variant bg-primary text-on-primary" data-k="2">2</button>
+<button class="k-selector px-2 py-1 text-xs border border-outline-variant bg-surface text-on-surface" data-k="3">3</button>
+<button class="k-selector px-2 py-1 text-xs border border-outline-variant bg-surface text-on-surface" data-k="4">4</button>
+<button class="k-selector px-2 py-1 text-xs border border-outline-variant bg-surface text-on-surface" data-k="5">5</button>
+</div>
+<span class="text-on-surface-variant text-[10px]" id="selection-count">0/2 Selected</span>
+</h3>
+<div class="grid grid-cols-1 gap-sm" id="interactive-regions">
+<!-- Populated by JS -->
+</div>
+<div class="mt-auto pt-md border-t border-outline-variant/50 flex flex-col gap-sm theme-transition">
+<div class="flex justify-between items-center">
+<span class="font-data-sm text-data-sm text-on-surface-variant">Selected Yield:</span>
+<span class="font-data-lg text-data-lg text-primary" id="selected-yield">0.00 TWh</span>
+</div>
+<div class="flex justify-between items-center">
+<span class="font-data-sm text-data-sm text-on-surface-variant">Status:</span>
+<span class="font-data-md text-data-md text-on-surface-variant" id="selected-status">Select 2 regions</span>
+</div>
+</div>
+</div>
+<!-- Leaderboard -->
+<div class="col-span-1 lg:col-span-7 flex flex-col border border-outline-variant bg-surface overflow-hidden theme-transition">
+<div class="bg-surface-container p-sm border-b border-outline-variant flex justify-between items-center theme-transition">
+<h3 class="font-data-md text-data-md text-on-surface uppercase">Classical Leaderboard</h3>
+<span class="font-data-sm text-data-sm text-on-surface-variant">Top Combinations</span>
+</div>
+<div class="overflow-y-auto max-h-[400px] custom-scrollbar">
+<table class="w-full text-left border-collapse">
+<thead class="sticky top-0 bg-surface-container shadow-sm theme-transition">
+<tr>
+<th class="p-sm font-data-sm text-data-sm text-on-surface-variant font-medium">Rank</th>
+<th class="p-sm font-data-sm text-data-sm text-on-surface-variant font-medium">Regions</th>
+<th class="p-sm font-data-sm text-data-sm text-on-surface-variant font-medium">State</th>
+<th class="p-sm font-data-sm text-data-sm text-on-surface-variant font-medium text-right">Yield</th>
+</tr>
+</thead>
+<tbody class="font-data-sm text-data-sm text-on-surface" id="leaderboard-body">
+<!-- Populated by JS -->
+</tbody>
+</table>
+</div>
+</div>
+</div>
+</div>
+</section>
+<!-- Scripts for Data & Interactive -->
+<script>
+        document.addEventListener('DOMContentLoaded', () => {
+            const renderDatasetTable = () => {
+                const tbody = document.getElementById('dataset-tbody');
+                tbody.innerHTML = '';
+                const sortedKeys = getSortedKeys();
+                
+                sortedKeys.forEach(key => {
+                    const tr = document.createElement('tr');
+                    tr.className = "border-b border-outline-variant/20 hover:bg-surface-container-low transition-colors theme-transition";
+                    
+                    tr.innerHTML = `
+                        <td class="p-sm text-on-surface-variant">${key}</td>
+                        <td class="p-sm text-on-surface">${RE_DATA[key].name}</td>
+                        <td class="p-sm text-right text-on-surface-variant">${fmt(RE_DATA[key].gwh)}</td>
+                        <td class="p-sm text-right text-primary font-medium">${fmt(RE_DATA[key].twh)}</td>
+                    `;
+                    tbody.appendChild(tr);
+                });
+                
+                // Update Sort Icons
+                document.querySelectorAll('#dataset-table th').forEach(th => {
+                    const span = th.querySelector('span');
+                    if(th.dataset.sort === currentSort.col) {
+                        span.textContent = currentSort.desc ? '▼' : '▲';
+                        span.classList.remove('opacity-50');
+                    } else {
+                        span.textContent = '';
+                        span.classList.add('opacity-50');
+                    }
+                });
+            };
+
+            const renderVisuals = () => {
+                const barContainer = document.getElementById('bar-chart-container');
+                const rankContainer = document.getElementById('ranked-list-container');
+                barContainer.innerHTML = '';
+                rankContainer.innerHTML = '';
+
+                // Generate dynamic chart max based on data
+                let maxValue = 0;
+                Object.values(RE_DATA).forEach(data => {
+                    if (data.twh > maxValue) maxValue = data.twh;
+                });
+                const chartMax = Math.ceil(maxValue * 1.1);
+
+                // Y-Axis labels dynamically
+                const numLabels = 4;
+                const labelStep = chartMax / (numLabels - 1);
+                const yAxisContainer = document.createElement('div');
+                yAxisContainer.className = "absolute -left-6 bottom-0 top-0 flex flex-col justify-between text-[8px] font-data-sm text-on-surface-variant z-10";
+                
+                for(let i=0; i<numLabels; i++) {
+                    const val = chartMax - (i * labelStep);
+                    const label = document.createElement('span');
+                    label.textContent = val > 0 && val < 10 ? val.toFixed(1) : Math.round(val);
+                    yAxisContainer.appendChild(label);
+                    
+                    // Gridline
+                    if(i < numLabels - 1) { // don't draw bottom gridline as it's the axis
+                        const gridline = document.createElement('div');
+                        gridline.className = "absolute left-0 right-0 border-t border-outline-variant/30 z-0";
+                        gridline.style.top = `${(i/(numLabels-1))*100}%`;
+                        barContainer.appendChild(gridline);
+                    }
+                }
+                barContainer.appendChild(yAxisContainer);
+
+                // Fixed order for chart: Rajasthan, Gujarat, Karnataka, Tamil Nadu, Andhra Pradesh
+                const chartOrder = ["x1", "x2", "x3", "x4", "x5"];
+
+                chartOrder.forEach(key => {
+                    const data = RE_DATA[key];
+                    const heightPct = (data.twh / chartMax) * 100;
+                    
+                    const group = document.createElement('div');
+                    group.className = "flex flex-col items-center h-full w-full justify-end group z-10 relative";
+                    
+                    group.innerHTML = `
+                        <div class="absolute -top-6 text-[10px] font-data-sm text-primary opacity-0 group-hover:opacity-100 transition-opacity whitespace-nowrap bg-surface-container px-1 rounded shadow-sm border border-outline-variant/50 z-20">
+                            ${data.name}<br/>${fmt(data.twh)} TWh<br/>${fmt(data.gwh)} GWh
+                        </div>
+                        <span class="text-[10px] font-data-sm text-on-surface-variant mb-1 opacity-0 group-hover:opacity-100 transition-opacity absolute top-0 -translate-y-full">${fmt(data.twh)}</span>
+                        <div class="w-6 sm:w-8 bg-tertiary relative transition-all hover:brightness-110" style="height: ${heightPct}%"></div>
+                        <div class="absolute -bottom-5 text-[8px] sm:text-[10px] font-data-sm text-on-surface-variant uppercase text-center w-full truncate px-1">${data.id}</div>
+                    `;
+                    barContainer.appendChild(group);
+                });
+
+                // Ranked List
+                const sortedByTotal = [...Object.keys(RE_DATA)].sort((a,b) => RE_DATA[b].twh - RE_DATA[a].twh);
+                sortedByTotal.forEach((key, idx) => {
+                    const data = RE_DATA[key];
+                    const pct = (data.twh / chartMax) * 100;
+                    const item = document.createElement('div');
+                    item.className = "flex flex-col gap-1";
+                    item.innerHTML = `
+                        <div class="flex justify-between items-center text-[10px] font-data-sm">
+                            <span class="text-on-surface"><span class="text-on-surface-variant mr-1">#${idx+1}</span>${data.name}</span>
+                            <span class="text-primary">${fmt(data.twh)}</span>
+                        </div>
+                        <div class="w-full h-1 bg-surface-container overflow-hidden">
+                            <div class="h-full bg-primary" style="width: ${pct}%"></div>
+                        </div>
+                    `;
+                    rankContainer.appendChild(item);
+                });
+            };
+
+            // Dataset Table Sorting
+            document.querySelectorAll('#dataset-table th').forEach(th => {
+                th.addEventListener('click', () => {
+                    const col = th.dataset.sort;
+                    if(currentSort.col === col) {
+                        currentSort.desc = !currentSort.desc;
+                    } else {
+                        currentSort.col = col;
+                        currentSort.desc = true;
+                    }
+                    renderDatasetTable();
+                });
+            });
+
+            renderDatasetTable();
+            renderVisuals();
+
+            // Populate Leaderboard
+            const renderLeaderboard = () => {
+                const lbody = document.getElementById('leaderboard-body');
+                lbody.innerHTML = '';
+                combinations.forEach((combo, index) => {
+                    const tr = document.createElement('tr');
+                    const isOptimal = index === 0;
+                    tr.className = `border-b border-outline-variant/20 transition-colors theme-transition ${isOptimal ? 'bg-primary/5' : 'hover:bg-surface-container-low'}`;
+                    tr.innerHTML = `
+                        <td class="p-sm ${isOptimal ? 'text-primary font-bold' : 'text-on-surface-variant'}">#${index + 1}</td>
+                        <td class="p-sm font-body-sm">${combo.regions.join(' + ')}</td>
+                        <td class="p-sm text-on-surface-variant font-data-sm tracking-widest">${combo.state}</td>
+                        <td class="p-sm text-right ${isOptimal ? 'text-primary font-bold' : ''}">${fmt(combo.total)}</td>
+                    `;
+                    lbody.appendChild(tr);
+                });
+            }
+            renderLeaderboard();
+
+            // Interactive Selector Logic
+            const regionContainer = document.getElementById('interactive-regions');
+            let selectedKeys = new Set();
+
+            const updateSelectionUI = () => {
+                document.getElementById('selection-count').textContent = `${selectedKeys.size}/${selectionCount} Selected`;
+                
+                if(selectedKeys.size === selectionCount) {
+                    const keysArr = Array.from(selectedKeys);
+                    let selTotal = 0;
+                    keysArr.forEach(k => selTotal += RE_DATA[k].twh);
+                    document.getElementById('selected-yield').textContent = `${fmt(selTotal)} TWh`;
+                    
+                    const rankIndex = combinations.findIndex(c => c.keys.every(val => keysArr.includes(val)) && c.keys.length === keysArr.length);
+                    
+                    if(rankIndex === 0) {
+                        document.getElementById('selected-status').innerHTML = `<span class="text-tertiary">Optimal Selection found! (Rank #1)</span>`;
+                    } else {
+                        const diff = OPTIMAL.total - selTotal;
+                        document.getElementById('selected-status').innerHTML = `<span class="text-error">Rank #${rankIndex+1} (Suboptimal: -${fmt(diff)} TWh)</span>`;
+                    }
+                } else {
+                    document.getElementById('selected-yield').textContent = `0.00 TWh`;
+                    document.getElementById('selected-status').innerHTML = `Select ${selectionCount - selectedKeys.size} more region(s)`;
+                }
+            };
+
+            const renderInteractiveRegions = () => {
+                regionContainer.innerHTML = '';
+                selectedKeys.clear();
+                for(let key in RE_DATA) {
+                    const btn = document.createElement('button');
+                    btn.className = "flex justify-between items-center p-sm border border-outline-variant text-left hover:bg-surface-container transition-colors group theme-transition";
+                    btn.dataset.key = key;
+                    btn.innerHTML = `
+                        <div class="flex items-center gap-sm">
+                            <div class="w-4 h-4 border border-outline flex items-center justify-center group-data-[selected=true]:bg-primary group-data-[selected=true]:border-primary transition-colors theme-transition">
+                                <span class="material-symbols-outlined text-[12px] text-surface opacity-0 group-data-[selected=true]:opacity-100 theme-transition">check</span>
+                            </div>
+                            <span class="font-body-md text-on-surface">${RE_DATA[key].name}</span>
+                        </div>
+                        <span class="font-data-sm text-on-surface-variant">${fmt(RE_DATA[key].twh)}</span>
+                    `;
+                    
+                    btn.addEventListener('click', () => {
+                        if(selectedKeys.has(key)) {
+                            selectedKeys.delete(key);
+                            btn.dataset.selected = "false";
+                        } else {
+                            if(selectedKeys.size < selectionCount) {
+                                selectedKeys.add(key);
+                                btn.dataset.selected = "true";
+                            } else {
+                                // blink error or something
+                                btn.classList.add('bg-error/10');
+                                setTimeout(()=>btn.classList.remove('bg-error/10'), 200);
+                            }
+                        }
+                        updateSelectionUI();
+                    });
+                    regionContainer.appendChild(btn);
+                }
+                updateSelectionUI();
+            };
+            
+            renderInteractiveRegions();
+
+            document.querySelectorAll('.k-selector').forEach(btn => {
+                btn.addEventListener('click', (e) => {
+                    document.querySelectorAll('.k-selector').forEach(b => {
+                        b.classList.remove('bg-primary', 'text-on-primary');
+                        b.classList.add('bg-surface', 'text-on-surface');
+                    });
+                    e.target.classList.remove('bg-surface', 'text-on-surface');
+                    e.target.classList.add('bg-primary', 'text-on-primary');
+                    selectionCount = parseInt(e.target.dataset.k);
+                    updateCombinations();
+                    renderLeaderboard();
+                    renderInteractiveRegions();
+                });
+            });
+
+        });
+    </script>
+<!-- QUBO Section -->
+<section class="px-margin py-xl bg-surface border-t border-outline-variant/30 theme-transition" id="qubo">
+<div class="max-w-7xl mx-auto w-full flex flex-col items-center gap-xl">
+<div class="text-center max-w-3xl flex flex-col gap-md">
+<h2 class="font-headline-lg text-headline-lg-mobile lg:text-headline-lg text-on-surface">03 — HOW THE PROBLEM BECOMES A QUANTUM OPTIMIZATION PROBLEM</h2>
+<p class="font-body-md text-body-md text-on-surface-variant">QUBO converts the selection objective and constraint into a form that QAOA can optimize. Pipeline: Real Data (GWh/year) -&gt; Binary Model (xᵢ=0,1) -&gt; QUBO (Objective + Penalty) -&gt; Qubits (5 qubits) -&gt; QAOA (Layers) -&gt; Measure (Probabilities).</p>
+</div>
+<!-- Math Box -->
+<div class="w-full max-w-4xl bg-surface-container-lowest border border-outline-variant/50 p-lg lg:p-xl flex flex-col items-center justify-center gap-lg relative theme-transition">
+<div class="absolute top-0 left-0 bg-primary/10 text-primary font-data-sm px-sm py-xs border-b border-r border-outline-variant/50 theme-transition">Cost Function C(x)</div>
+<div class="font-data-lg lg:text-[24px] text-on-surface text-center leading-loose tracking-wide overflow-x-auto w-full py-md">
+                    C(x) = <span class="text-error">- Σ E<sub>i</sub>x<sub>i</sub></span> + <span class="text-tertiary">λ ( Σ x<sub>i</sub> - 2 )<sup>2</sup></span>
+</div>
+<div class="grid grid-cols-1 md:grid-cols-2 w-full gap-[1px] bg-outline-variant/50 border-t border-outline-variant/50 pt-lg mt-md theme-transition">
+<div class="bg-surface-container-lowest flex flex-col gap-xs px-md theme-transition">
+<span class="font-data-md text-error flex items-center gap-xs"><span class="material-symbols-outlined text-[18px]">trending_up</span> Reward (Objective Term)</span>
+<p class="font-body-sm text-on-surface-variant">Minimizing negative yield is equivalent to maximizing yield. Eᵢ is the total energy for region i.</p>
+</div>
+<div class="bg-surface-container-lowest flex flex-col gap-xs px-md theme-transition">
+<span class="font-data-md text-tertiary flex items-center gap-xs"><span class="material-symbols-outlined text-[18px]">gavel</span> Penalty Term</span>
+<p class="font-body-sm text-on-surface-variant">Enforces the constraint. If sum(xᵢ) ≠ 2, a massive penalty (λ) is added, raising the energy state far above the ground state.</p>
+</div>
+</div>
+</div>
+<!-- Qubit Mapping -->
+<div class="w-full max-w-4xl border border-outline-variant bg-surface flex flex-col md:flex-row divide-y md:divide-y-0 md:divide-x divide-outline-variant theme-transition">
+<div class="p-md flex-1 flex flex-col items-center text-center gap-sm">
+<span class="font-data-sm text-on-surface-variant uppercase tracking-wider">Classical Variables</span>
+<div class="flex gap-xs font-data-md text-on-surface">
+<span class="px-2 py-1 bg-surface-container border border-outline-variant theme-transition">x₁</span>
+<span class="px-2 py-1 bg-surface-container border border-outline-variant theme-transition">x₂</span>
+<span class="px-2 py-1 bg-surface-container border border-outline-variant theme-transition">x₃</span>
+<span class="px-2 py-1 bg-surface-container border border-outline-variant theme-transition">x₄</span>
+<span class="px-2 py-1 bg-surface-container border border-outline-variant theme-transition">x₅</span>
+</div>
+<span class="font-data-sm text-on-surface-variant text-[10px]">xᵢ ∈ {0,1}</span>
+</div>
+<div class="p-md flex items-center justify-center bg-surface-container-low shrink-0 theme-transition">
+<span class="material-symbols-outlined text-primary">arrow_forward</span>
+</div>
+<div class="p-md flex-1 flex flex-col items-center text-center gap-sm">
+<span class="font-data-sm text-on-surface-variant uppercase tracking-wider">Quantum Qubits</span>
+<div class="flex gap-xs font-data-md text-primary">
+<span class="px-2 py-1 bg-primary/10 border border-primary/30 theme-transition">q₁</span>
+<span class="px-2 py-1 bg-primary/10 border border-primary/30 theme-transition">q₂</span>
+<span class="px-2 py-1 bg-primary/10 border border-primary/30 theme-transition">q₃</span>
+<span class="px-2 py-1 bg-primary/10 border border-primary/30 theme-transition">q₄</span>
+<span class="px-2 py-1 bg-primary/10 border border-primary/30 theme-transition">q₅</span>
+</div>
+<span class="font-data-sm text-on-surface-variant text-[10px]">Mapping: x₁-x₅ mapped to 5 binary variables. xᵢ = (1 - Zᵢ)/2</span>
+</div>
+</div>
+</div>
+</section>
+<!-- QAOA & Circuit Dashboard -->
+<section class="px-margin py-xl bg-surface-container-low border-t border-outline-variant/30 theme-transition" id="qaoa">
+<div class="max-w-7xl mx-auto w-full flex flex-col gap-xl">
+<div class="flex flex-col md:flex-row gap-lg justify-between items-start w-full">
+<div class="flex flex-col gap-md max-w-3xl">
+<h2 class="font-headline-lg text-headline-lg-mobile lg:text-headline-lg text-on-surface">Quantum Approximate Optimization Algorithm</h2>
+<p class="font-body-md text-body-md text-on-surface-variant">QAOA is a hybrid quantum-classical algorithm: the circuit is quantum, while a classical optimizer tunes its parameters. It uses alternating layers of a Cost Hamiltonian (derived from our QUBO) and a Mixer Hamiltonian to evolve an initial superposition state towards the optimal ground state. The classical optimizer adjusts γ and β to minimize the expected value of the Cost Hamiltonian.</p>
+</div>
+<div class="flex flex-col gap-sm p-md border border-outline-variant bg-surface theme-transition w-full max-w-sm">
+<h4 class="font-data-sm text-on-surface uppercase border-b border-outline-variant/50 pb-xs">Parameter Controls</h4>
+<div class="flex flex-col gap-1">
+<label class="flex justify-between items-center font-data-sm text-on-surface-variant text-[10px]">
+<span>γ (Gamma)</span>
+<span class="text-tertiary" id="gamma-val">1.0</span>
+</label>
+<input class="accent-tertiary" id="gamma-slider" max="2" min="0" step="0.1" type="range" value="1.0"/>
+</div>
+<div class="flex flex-col gap-1 mt-2">
+<label class="flex justify-between items-center font-data-sm text-on-surface-variant text-[10px]">
+<span>β (Beta)</span>
+<span class="text-secondary" id="beta-val">0.5</span>
+</label>
+<input class="accent-secondary" id="beta-slider" max="1" min="0" step="0.05" type="range" value="0.5"/>
+</div>
+</div>
+</div>
+<div class="flex justify-between items-end border-b border-outline-variant/50 pb-2 theme-transition">
+<button class="flex items-center gap-2 px-md py-sm bg-primary text-on-primary font-data-sm uppercase tracking-wider hover:bg-primary-fixed transition-colors" id="btn-play-circuit">
+<span class="material-symbols-outlined text-[18px]">play_arrow</span>
+<span>Play Circuit</span>
+</button>
+<span class="font-data-sm text-on-surface-variant text-[10px] flex items-center gap-1">
+<span class="w-2 h-2 rounded-full bg-primary inline-block"></span> p=2 Layer shown
+        </span>
+</div>
+<!-- Circuit Diagram Visualization -->
+<div class="w-full overflow-x-auto border border-outline-variant bg-surface p-lg hide-scrollbar relative theme-transition">
+<div class="min-w-[800px] flex flex-col gap-md font-data-sm text-on-surface-variant py-md relative" id="circuit-container">
+<div class="pulse-container" id="pulse-container"></div>
+<!-- Qubit Line 1 -->
+<div class="flex items-center gap-md qubit-row p-1 -mx-1 rounded" data-qubit="q1" data-region="Rajasthan">
+<div class="w-8 text-right font-data-md qubit-label z-10">|0⟩</div>
+<div class="w-8 h-[1px] bg-outline-variant/50 theme-transition z-10"></div>
+<div class="circuit-gate gate-init w-8 h-8 border border-primary text-primary flex items-center justify-center bg-primary/5 theme-transition font-data-md relative z-10" data-desc="Places all qubits into equal superposition." data-gate="H" data-stage="0">
+    H
+    <span class="tooltip bg-surface-container border border-outline-variant text-on-surface text-[10px] px-2 py-1 rounded shadow-lg">Places all qubits into equal superposition.</span>
+</div>
+<div class="w-8 h-[1px] bg-outline-variant/50 theme-transition z-10"></div>
+<!-- Cost Layer -->
+<div class="flex-1 h-[1px] bg-outline-variant/50 relative flex items-center justify-around border-y border-transparent theme-transition z-10">
+<div class="circuit-gate gate-cost1 w-16 h-8 border border-tertiary text-tertiary flex items-center justify-center bg-tertiary/5 text-[10px] theme-transition font-data-sm relative" data-desc="Applies the optimization cost from the QUBO." data-gate="Cost(γ₁)" data-stage="1">
+<span class="gamma-label">Cost(1.0)</span>
+<span class="tooltip bg-surface-container border border-outline-variant text-on-surface text-[10px] px-2 py-1 rounded shadow-lg">Applies the optimization cost from the QUBO.</span>
+</div>
+<div class="circuit-gate gate-mixer1 w-16 h-8 border border-secondary text-secondary flex items-center justify-center bg-secondary/5 text-[10px] theme-transition font-data-sm relative" data-desc="Redistributes probability between candidate solutions." data-gate="Mixer(β₁)" data-stage="2">
+<span class="beta-label">Mixer(0.5)</span>
+<span class="tooltip bg-surface-container border border-outline-variant text-on-surface text-[10px] px-2 py-1 rounded shadow-lg">Redistributes probability between candidate solutions.</span>
+</div>
+<div class="circuit-gate gate-cost2 w-16 h-8 border border-tertiary text-tertiary flex items-center justify-center bg-tertiary/5 text-[10px] theme-transition font-data-sm relative" data-desc="Applies the optimization cost from the QUBO." data-gate="Cost(γ₂)" data-stage="3">
+<span class="gamma-label">Cost(1.0)</span>
+<span class="tooltip bg-surface-container border border-outline-variant text-on-surface text-[10px] px-2 py-1 rounded shadow-lg">Applies the optimization cost from the QUBO.</span>
+</div>
+<div class="circuit-gate gate-mixer2 w-16 h-8 border border-secondary text-secondary flex items-center justify-center bg-secondary/5 text-[10px] theme-transition font-data-sm relative" data-desc="Redistributes probability between candidate solutions." data-gate="Mixer(β₂)" data-stage="4">
+<span class="beta-label">Mixer(0.5)</span>
+<span class="tooltip bg-surface-container border border-outline-variant text-on-surface text-[10px] px-2 py-1 rounded shadow-lg">Redistributes probability between candidate solutions.</span>
+</div>
+</div>
+<!-- Measurement Layer -->
+<div class="w-8 h-[1px] bg-outline-variant/50 theme-transition z-10"></div>
+<div class="circuit-gate gate-measure w-8 h-8 border border-on-surface-variant text-on-surface-variant flex items-center justify-center bg-surface-container theme-transition font-data-md relative z-10" data-desc="Measures the final quantum state." data-gate="M" data-stage="5">
+    M
+    <span class="tooltip bg-surface-container border border-outline-variant text-on-surface text-[10px] px-2 py-1 rounded shadow-lg">Measures the final quantum state.</span>
+</div>
+<div class="w-24 text-left font-data-sm text-[10px] text-primary opacity-0 transition-opacity row-label ml-2 z-10">q1: Rajasthan</div>
+</div>
+<!-- Qubit Line 2 -->
+<div class="flex items-center gap-md qubit-row p-1 -mx-1 rounded" data-qubit="q2" data-region="Gujarat">
+<div class="w-8 text-right font-data-md qubit-label z-10">|0⟩</div>
+<div class="w-8 h-[1px] bg-outline-variant/50 theme-transition z-10"></div>
+<div class="circuit-gate gate-init w-8 h-8 border border-primary text-primary flex items-center justify-center bg-primary/5 theme-transition font-data-md relative z-10" data-desc="Places all qubits into equal superposition." data-gate="H" data-stage="0">
+    H
+    <span class="tooltip bg-surface-container border border-outline-variant text-on-surface text-[10px] px-2 py-1 rounded shadow-lg">Places all qubits into equal superposition.</span>
+</div>
+<div class="w-8 h-[1px] bg-outline-variant/50 theme-transition z-10"></div>
+<div class="flex-1 h-[1px] bg-outline-variant/50 relative flex items-center justify-around border-y border-transparent theme-transition z-10">
+<div class="circuit-gate gate-cost1 w-16 h-8 border border-tertiary text-tertiary flex items-center justify-center bg-tertiary/5 text-[10px] theme-transition font-data-sm relative" data-desc="Applies the optimization cost from the QUBO." data-gate="Cost(γ₁)" data-stage="1">
+<span class="gamma-label">Cost(1.0)</span>
+<span class="tooltip bg-surface-container border border-outline-variant text-on-surface text-[10px] px-2 py-1 rounded shadow-lg">Applies the optimization cost from the QUBO.</span>
+</div>
+<div class="circuit-gate gate-mixer1 w-16 h-8 border border-secondary text-secondary flex items-center justify-center bg-secondary/5 text-[10px] theme-transition font-data-sm relative" data-desc="Redistributes probability between candidate solutions." data-gate="Mixer(β₁)" data-stage="2">
+<span class="beta-label">Mixer(0.5)</span>
+<span class="tooltip bg-surface-container border border-outline-variant text-on-surface text-[10px] px-2 py-1 rounded shadow-lg">Redistributes probability between candidate solutions.</span>
+</div>
+<div class="circuit-gate gate-cost2 w-16 h-8 border border-tertiary text-tertiary flex items-center justify-center bg-tertiary/5 text-[10px] theme-transition font-data-sm relative" data-desc="Applies the optimization cost from the QUBO." data-gate="Cost(γ₂)" data-stage="3">
+<span class="gamma-label">Cost(1.0)</span>
+<span class="tooltip bg-surface-container border border-outline-variant text-on-surface text-[10px] px-2 py-1 rounded shadow-lg">Applies the optimization cost from the QUBO.</span>
+</div>
+<div class="circuit-gate gate-mixer2 w-16 h-8 border border-secondary text-secondary flex items-center justify-center bg-secondary/5 text-[10px] theme-transition font-data-sm relative" data-desc="Redistributes probability between candidate solutions." data-gate="Mixer(β₂)" data-stage="4">
+<span class="beta-label">Mixer(0.5)</span>
+<span class="tooltip bg-surface-container border border-outline-variant text-on-surface text-[10px] px-2 py-1 rounded shadow-lg">Redistributes probability between candidate solutions.</span>
+</div>
+</div>
+<div class="w-8 h-[1px] bg-outline-variant/50 theme-transition z-10"></div>
+<div class="circuit-gate gate-measure w-8 h-8 border border-on-surface-variant text-on-surface-variant flex items-center justify-center bg-surface-container theme-transition font-data-md relative z-10" data-desc="Measures the final quantum state." data-gate="M" data-stage="5">
+    M
+    <span class="tooltip bg-surface-container border border-outline-variant text-on-surface text-[10px] px-2 py-1 rounded shadow-lg">Measures the final quantum state.</span>
+</div>
+<div class="w-24 text-left font-data-sm text-[10px] text-primary opacity-0 transition-opacity row-label ml-2 z-10">q2: Gujarat</div>
+</div>
+<div class="flex items-center justify-center w-full py-2 opacity-50 qubit-row p-1 -mx-1 rounded" data-qubit="q3" data-region="Karnataka">
+<span class="material-symbols-outlined text-[16px]">more_vert</span>
+<div class="w-24 text-left font-data-sm text-[10px] text-primary opacity-0 transition-opacity row-label absolute right-0">q3: Karnataka</div>
+</div>
+<!-- Qubit Line 5 (Implied) -->
+<div class="flex items-center gap-md qubit-row p-1 -mx-1 rounded opacity-40 hover:opacity-100 transition-opacity" data-qubit="q5" data-region="Andhra Pradesh">
+<div class="w-8 text-right font-data-md qubit-label z-10">|0⟩</div>
+<div class="w-8 h-[1px] bg-outline-variant/50 theme-transition z-10"></div>
+<div class="circuit-gate gate-init w-8 h-8 border border-primary text-primary flex items-center justify-center bg-primary/5 theme-transition font-data-md relative z-10" data-desc="Places all qubits into equal superposition." data-gate="H" data-stage="0">
+    H
+    <span class="tooltip bg-surface-container border border-outline-variant text-on-surface text-[10px] px-2 py-1 rounded shadow-lg">Places all qubits into equal superposition.</span>
+</div>
+<div class="w-8 h-[1px] bg-outline-variant/50 theme-transition z-10"></div>
+<div class="flex-1 h-[1px] bg-outline-variant/50 relative flex items-center justify-around border-y border-transparent theme-transition z-10">
+<div class="circuit-gate gate-cost1 w-16 h-8 border border-tertiary text-tertiary flex items-center justify-center bg-tertiary/5 text-[10px] theme-transition font-data-sm relative" data-desc="Applies the optimization cost from the QUBO." data-gate="Cost(γ₁)" data-stage="1">
+<span class="gamma-label">Cost(1.0)</span>
+<span class="tooltip bg-surface-container border border-outline-variant text-on-surface text-[10px] px-2 py-1 rounded shadow-lg">Applies the optimization cost from the QUBO.</span>
+</div>
+<div class="circuit-gate gate-mixer1 w-16 h-8 border border-secondary text-secondary flex items-center justify-center bg-secondary/5 text-[10px] theme-transition font-data-sm relative" data-desc="Redistributes probability between candidate solutions." data-gate="Mixer(β₁)" data-stage="2">
+<span class="beta-label">Mixer(0.5)</span>
+<span class="tooltip bg-surface-container border border-outline-variant text-on-surface text-[10px] px-2 py-1 rounded shadow-lg">Redistributes probability between candidate solutions.</span>
+</div>
+<div class="circuit-gate gate-cost2 w-16 h-8 border border-tertiary text-tertiary flex items-center justify-center bg-tertiary/5 text-[10px] theme-transition font-data-sm relative" data-desc="Applies the optimization cost from the QUBO." data-gate="Cost(γ₂)" data-stage="3">
+<span class="gamma-label">Cost(1.0)</span>
+<span class="tooltip bg-surface-container border border-outline-variant text-on-surface text-[10px] px-2 py-1 rounded shadow-lg">Applies the optimization cost from the QUBO.</span>
+</div>
+<div class="circuit-gate gate-mixer2 w-16 h-8 border border-secondary text-secondary flex items-center justify-center bg-secondary/5 text-[10px] theme-transition font-data-sm relative" data-desc="Redistributes probability between candidate solutions." data-gate="Mixer(β₂)" data-stage="4">
+<span class="beta-label">Mixer(0.5)</span>
+<span class="tooltip bg-surface-container border border-outline-variant text-on-surface text-[10px] px-2 py-1 rounded shadow-lg">Redistributes probability between candidate solutions.</span>
+</div>
+</div>
+<div class="w-8 h-[1px] bg-outline-variant/50 theme-transition z-10"></div>
+<div class="circuit-gate gate-measure w-8 h-8 border border-on-surface-variant text-on-surface-variant flex items-center justify-center bg-surface-container theme-transition font-data-md relative z-10" data-desc="Measures the final quantum state." data-gate="M" data-stage="5">
+    M
+    <span class="tooltip bg-surface-container border border-outline-variant text-on-surface text-[10px] px-2 py-1 rounded shadow-lg">Measures the final quantum state.</span>
+</div>
+<div class="w-24 text-left font-data-sm text-[10px] text-primary opacity-0 transition-opacity row-label ml-2 z-10">q5: Andhra Pradesh</div>
+</div>
+</div>
+<!-- Labels -->
+<div class="min-w-[800px] flex gap-md mt-sm border-t border-outline-variant/50 pt-sm theme-transition">
+<div class="w-[88px] text-center font-data-sm text-[10px] text-primary transition-colors stage-label-init">Initialization</div>
+<div class="flex-1 flex justify-around font-data-sm text-[10px] text-tertiary">
+<span class="stage-label-cost1 transition-colors">Cost Layer 1</span>
+<span class="stage-label-mixer1 text-secondary transition-colors">Mixer Layer 1</span>
+<span class="stage-label-cost2 transition-colors">Cost Layer 2</span>
+<span class="stage-label-mixer2 text-secondary transition-colors">Mixer Layer 2</span>
+</div>
+<div class="w-32 text-left pl-4 font-data-sm text-[10px] text-on-surface-variant transition-colors stage-label-measure">Measurement</div>
+</div>
+</div>
+<!-- Gate Detail Panel (Hidden by default) -->
+<div class="hidden mt-md p-md border border-outline-variant bg-surface-container theme-transition" id="gate-detail-panel">
+<div class="flex justify-between items-start border-b border-outline-variant/50 pb-sm mb-sm">
+<h4 class="font-data-md text-primary uppercase" id="detail-gate-name">Gate Detail</h4>
+<button class="text-on-surface-variant hover:text-on-surface" id="close-detail-panel">
+<span class="material-symbols-outlined text-[18px]">close</span>
+</button>
+</div>
+<p class="font-body-sm text-on-surface-variant" id="detail-gate-desc">Select a gate to see its details.</p>
+</div>
+<!-- Result Preview Card -->
+<div class="flex flex-col md:flex-row gap-lg bg-surface-container-low border border-outline-variant p-lg theme-transition mt-lg">
+<div class="flex-1 flex flex-col gap-sm border-b md:border-b-0 md:border-r border-outline-variant/50 pb-md md:pb-0 md:pr-md theme-transition">
+<span class="font-data-sm text-on-surface-variant uppercase tracking-wider">Optimal State</span>
+<span class="font-data-lg text-primary text-xl">Rajasthan + Gujarat</span>
+</div>
+<div class="flex-1 flex flex-col gap-sm">
+<span class="font-data-sm text-on-surface-variant uppercase tracking-wider">QAOA Probability</span>
+<span class="font-data-lg text-tertiary text-xl">61.2%</span>
+<span class="font-data-sm text-on-surface-variant text-[10px]">Measurement likelihood at p=2</span>
+</div>
+</div>
+<div class="mt-sm inline-flex items-center gap-2 bg-surface-variant px-3 py-2 border border-outline-variant text-on-surface-variant font-data-sm w-full lg:w-auto">
+<span class="material-symbols-outlined text-[16px] text-tertiary">info</span>
+<span><strong>Research Note:</strong> 61.2% is a measurement probability derived from state-vector simulation, not an absolute accuracy metric. No quantum advantage is claimed.</span>
+</div>
+</div>
+</section>
+<!-- Dashboard Interactive Script -->
+<script>
+document.addEventListener('DOMContentLoaded', () => {
+    // Parameter Sliders
+    const gammaSlider = document.getElementById('gamma-slider');
+    const betaSlider = document.getElementById('beta-slider');
+    const gammaVal = document.getElementById('gamma-val');
+    const betaVal = document.getElementById('beta-val');
+    const gammaLabels = document.querySelectorAll('.gamma-label');
+    const betaLabels = document.querySelectorAll('.beta-label');
+
+    gammaSlider.addEventListener('input', (e) => {
+        const val = parseFloat(e.target.value).toFixed(1);
+        gammaVal.textContent = val;
+        gammaLabels.forEach(l => l.textContent = `Cost(${val})`);
+    });
+
+    betaSlider.addEventListener('input', (e) => {
+        const val = parseFloat(e.target.value).toFixed(2);
+        betaVal.textContent = val;
+        betaLabels.forEach(l => l.textContent = `Mixer(${val})`);
+    });
+
+    // Row Hover Effects
+    const qubitRows = document.querySelectorAll('.qubit-row');
+    qubitRows.forEach(row => {
+        row.addEventListener('mouseenter', () => {
+            const label = row.querySelector('.row-label');
+            if(label) label.classList.remove('opacity-0');
+        });
+        row.addEventListener('mouseleave', () => {
+            const label = row.querySelector('.row-label');
+            if(label) label.classList.add('opacity-0');
+        });
+    });
+
+    // Gate Click Details
+    const gates = document.querySelectorAll('.circuit-gate');
+    const detailPanel = document.getElementById('gate-detail-panel');
+    const detailName = document.getElementById('detail-gate-name');
+    const detailDesc = document.getElementById('detail-gate-desc');
+    const closeDetailBtn = document.getElementById('close-detail-panel');
+
+    gates.forEach(gate => {
+        gate.addEventListener('click', () => {
+            detailName.textContent = gate.dataset.gate;
+            detailDesc.textContent = gate.dataset.desc + " Its implementation in QAOA is crucial for the phase separation and mixing operations in the p=2 pipeline.";
+            detailPanel.classList.remove('hidden');
+        });
+    });
+
+    closeDetailBtn.addEventListener('click', () => {
+        detailPanel.classList.add('hidden');
+    });
+
+    // Traveling Ray Animation Sequence
+    const playBtn = document.getElementById('btn-play-circuit');
+    const pulseContainer = document.getElementById('pulse-container');
+    
+    // Group gates by stage
+    const stages = [0, 1, 2, 3, 4, 5];
+    const stageDuration = 300; // ms
+
+    let isPlaying = false;
+
+    playBtn.addEventListener('click', async () => {
+        if(isPlaying) return;
+        isPlaying = true;
+        const icon = playBtn.querySelector('.material-symbols-outlined');
+        icon.textContent = 'pause';
+        
+        // Reset everything
+        pulseContainer.innerHTML = '';
+        document.querySelectorAll('.circuit-gate').forEach(el => {
+            el.classList.remove('stage-active', 'stage-passed');
+        });
+        document.querySelectorAll('[class^="stage-label-"]').forEach(el => {
+            el.classList.remove('font-bold');
+        });
+
+        // Setup pulses for each wire
+        const pulses = [];
+        const containerRect = document.getElementById('circuit-container').getBoundingClientRect();
+        
+        document.querySelectorAll('.qubit-row').forEach(row => {
+            // Only add pulse if it's a full row (not the 'more_vert' one)
+            if (row.querySelector('.gate-init')) {
+                const pulse = document.createElement('div');
+                pulse.className = 'traveling-pulse';
+                
+                // Calculate vertical center of the row relative to container
+                const rowRect = row.getBoundingClientRect();
+                const topPos = rowRect.top - containerRect.top + (rowRect.height / 2) - 1; // -1 for half pulse height
+                
+                pulse.style.top = `${topPos}px`;
+                pulseContainer.appendChild(pulse);
+                pulses.push(pulse);
+            }
+        });
+
+        // Animate through stages
+        for (let i = 0; i < stages.length; i++) {
+            const stage = stages[i];
+            const currentGates = document.querySelectorAll(`.circuit-gate[data-stage="${stage}"]`);
+            
+            if (currentGates.length === 0) continue;
+            
+            // Activate current stage gates
+            currentGates.forEach(gate => {
+                gate.classList.add('stage-active');
+                gate.classList.remove('stage-passed');
+            });
+            
+            // Move pulses to the center of current gates
+            const firstGateRect = currentGates[0].getBoundingClientRect();
+            const targetX = firstGateRect.left - containerRect.left + (firstGateRect.width / 2) - 20; // -20 for half pulse width
+            
+            pulses.forEach(pulse => {
+                pulse.style.opacity = '1';
+                pulse.style.transform = `translateX(${targetX}px)`;
+                // Adjust transition speed for distance? Keep it uniform for now.
+                pulse.style.transition = `transform ${stageDuration}ms linear, opacity 0.2s`;
+            });
+
+            // Update Labels (rough map based on stage index)
+            const labelMap = ['.stage-label-init', '.stage-label-cost1', '.stage-label-mixer1', '.stage-label-cost2', '.stage-label-mixer2', '.stage-label-measure'];
+            const labelEl = document.querySelector(labelMap[stage]);
+            if(labelEl) labelEl.classList.add('font-bold');
+
+            await new Promise(r => setTimeout(r, stageDuration));
+            
+            // Deactivate and leave dimmed state
+            currentGates.forEach(gate => {
+                gate.classList.remove('stage-active');
+                gate.classList.add('stage-passed');
+            });
+            if(labelEl) labelEl.classList.remove('font-bold');
+            
+            // Optional: fade out passed state after a bit
+            setTimeout(() => {
+                currentGates.forEach(gate => gate.classList.remove('stage-passed'));
+            }, stageDuration * 2);
+        }
+        
+        // Fade out pulses at the end
+        pulses.forEach(pulse => {
+            pulse.style.opacity = '0';
+        });
+        
+        setTimeout(() => {
+            pulseContainer.innerHTML = '';
+        }, 200);
+        
+        icon.textContent = 'play_arrow';
+        isPlaying = false;
+    });
+});
+</script>
+<!-- Results Section -->
+<section class="px-margin py-xl bg-surface border-t border-outline-variant/30 theme-transition" id="results">
+<div class="max-w-7xl mx-auto w-full flex flex-col gap-lg">
+<div class="flex flex-col gap-xs border-b border-outline-variant/50 pb-sm theme-transition">
+<h2 class="font-headline-lg text-headline-lg-mobile lg:text-headline-lg text-on-surface uppercase tracking-wide">05 — RESULTS</h2>
+<p class="font-body-lg text-on-surface-variant">Interactive comparison of classical search and quantum simulation.</p>
+</div>
+<!-- Dashboard Controls -->
+<div class="flex flex-wrap items-center justify-between gap-md bg-surface-container p-sm border border-outline-variant theme-transition">
+<div class="flex gap-2">
+<button class="dash-btn active px-3 py-1.5 text-xs font-data-sm border border-outline-variant bg-primary text-on-primary transition-colors" id="btn-highlight">Highlight Selected</button>
+<button class="dash-btn px-3 py-1.5 text-xs font-data-sm border border-outline-variant bg-surface text-on-surface hover:bg-surface-variant transition-colors" id="btn-values">Show Values</button>
+<button class="dash-btn px-3 py-1.5 text-xs font-data-sm border border-outline-variant bg-surface text-on-surface hover:bg-surface-variant transition-colors" id="btn-sort">Sort Descending</button>
+</div>
+<button class="flex items-center gap-1 px-3 py-1.5 text-xs font-data-sm border border-outline-variant bg-surface text-on-surface hover:bg-surface-variant transition-colors" id="btn-replay">
+<span class="material-symbols-outlined text-[16px]">refresh</span> Replay Animation
+        </button>
+</div>
+<!-- Dashboard Charts Grid -->
+<div class="grid grid-cols-1 lg:grid-cols-2 gap-md">
+<!-- Left Panel: Classical vs QAOA -->
+<div class="flex flex-col border border-outline-variant bg-surface p-md theme-transition">
+<h3 class="font-data-md text-data-md text-on-surface uppercase border-b border-outline-variant/50 pb-sm mb-md theme-transition">Classical vs QAOA Comparison</h3>
+<div class="relative w-full h-[300px]">
+<canvas id="comparisonChart"></canvas>
+</div>
+<p class="font-data-sm text-xs text-on-surface-variant text-center mt-sm">Yield vs Measurement Probability (p=2)</p>
+</div>
+<!-- Right Panel: Candidate Regions -->
+<div class="flex flex-col border border-outline-variant bg-surface p-md theme-transition">
+<h3 class="font-data-md text-data-md text-on-surface uppercase border-b border-outline-variant/50 pb-sm mb-md theme-transition">Candidate Regions Data</h3>
+<div class="relative w-full h-[300px]">
+<canvas id="regionsChart"></canvas>
+</div>
+<p class="font-data-sm text-xs text-on-surface-variant text-center mt-sm">Generation Potential (TWh/year)</p>
+</div>
+</div>
+<!-- Summary Card -->
+<div class="flex flex-col md:flex-row gap-lg bg-surface-container-low border border-outline-variant p-lg theme-transition mt-md">
+<div class="flex-1 flex flex-col gap-sm border-b md:border-b-0 md:border-r border-outline-variant/50 pb-md md:pb-0 md:pr-md theme-transition">
+<span class="font-data-sm text-on-surface-variant uppercase tracking-wider">Selected Portfolio</span>
+<span class="font-data-lg text-primary text-xl">Rajasthan + Gujarat</span>
+<span class="font-data-sm text-on-surface-variant">Optimal State: |11000⟩</span>
+</div>
+<div class="flex-1 flex flex-col gap-sm border-b md:border-b-0 md:border-r border-outline-variant/50 pb-md md:pb-0 md:pr-md theme-transition">
+<span class="font-data-sm text-on-surface-variant uppercase tracking-wider">Total Yield</span>
+<span class="font-data-lg text-on-surface text-xl">70.13 TWh/year</span>
+<span class="font-data-sm text-on-surface-variant">Maximum possible capacity</span>
+</div>
+<div class="flex-1 flex flex-col gap-sm">
+<span class="font-data-sm text-on-surface-variant uppercase tracking-wider">QAOA Probability</span>
+<span class="font-data-lg text-tertiary text-xl">61.2%</span>
+<span class="font-data-sm text-on-surface-variant">Measurement likelihood at p=2</span>
+</div>
+</div>
+<div class="bg-primary/5 border border-primary/20 p-md theme-transition">
+<h4 class="font-data-md text-primary uppercase mb-xs">Conclusion</h4>
+<p class="font-body-md text-on-surface">The QAOA simulation (p=2) successfully identifies the optimal portfolio (Rajasthan and Gujarat) with a high measurement probability of 61.2%, demonstrating the viability of QUBO formulation for energy selection constraints.</p>
+</div>
+<!-- Research Note Footer -->
+<div class="mt-sm inline-flex items-center gap-2 bg-surface-variant px-3 py-2 border border-outline-variant text-on-surface-variant font-data-sm w-full lg:w-auto">
+<span class="material-symbols-outlined text-[16px] text-tertiary">info</span>
+<span><strong>Research Note:</strong> 61.2% is a measurement probability derived from state-vector simulation, not an absolute accuracy metric. No quantum advantage is claimed.</span>
+</div>
+</div>
+</section>
+<!-- Chart.js Dashboard Logic -->
+<script>
+document.addEventListener('DOMContentLoaded', () => {
+    // Chart references
+    let compChart, regChart;
+    
+    // State
+    let isHighlighted = true;
+    let showValues = false;
+    let isSorted = false;
+
+    // Theme colors helper
+    const getColors = () => {
+        const isDark = document.documentElement.classList.contains('dark');
+        const style = getComputedStyle(document.body);
+        return {
+            primary: isDark ? '#cfbcff' : '#6750a4',
+            primaryFixed: isDark ? '#e9ddff' : '#eaddff',
+            surfaceVariant: isDark ? '#36343a' : '#e7e0eb',
+            onSurface: isDark ? '#e6e0e9' : '#1c1b1f',
+            onSurfaceVariant: isDark ? '#cbc4d2' : '#49454f',
+            outline: isDark ? '#948e9c' : '#79747e',
+            gridColor: isDark ? 'rgba(148, 142, 156, 0.2)' : 'rgba(121, 116, 126, 0.2)'
+        };
+    };
+
+    // Data definitions
+    const regionsData = [
+        { name: 'Rajasthan', val: 40.59, highlight: true },
+        { name: 'Gujarat', val: 29.54, highlight: true },
+        { name: 'Tamil Nadu', val: 26.33, highlight: false },
+        { name: 'Karnataka', val: 24.12, highlight: false },
+        { name: 'Andhra Pradesh', val: 15.57, highlight: false }
+    ];
+
+    const initCharts = () => {
+        const colors = getColors();
+        
+        // Common Options
+        const commonOptions = {
+            responsive: true,
+            maintainAspectRatio: false,
+            animation: {
+                duration: 300,
+                easing: 'easeInOutQuad'
+            },
+            plugins: {
+                legend: { display: false },
+                tooltip: {
+                    backgroundColor: colors.surfaceVariant,
+                    titleColor: colors.onSurface,
+                    bodyColor: colors.onSurface,
+                    borderColor: colors.outline,
+                    borderWidth: 1,
+                    titleFont: { family: 'IBM Plex Mono', size: 12 },
+                    bodyFont: { family: 'IBM Plex Mono', size: 12 },
+                    padding: 10,
+                    cornerRadius: 4,
+                    displayColors: false
+                },
+                datalabels: { display: false } // We'll handle custom labels if needed, or omit for pure Chart.js
+            },
+            scales: {
+                x: {
+                    grid: { color: colors.gridColor, drawBorder: false },
+                    ticks: { color: colors.onSurfaceVariant, font: { family: 'IBM Plex Mono', size: 10 } }
+                },
+                y: {
+                    grid: { color: colors.gridColor, drawBorder: false },
+                    ticks: { color: colors.onSurfaceVariant, font: { family: 'IBM Plex Mono', size: 10 } }
+                }
+            }
+        };
+
+        // Comparison Chart (Vertical)
+        const compCtx = document.getElementById('comparisonChart').getContext('2d');
+        if(compChart) compChart.destroy();
+        compChart = new Chart(compCtx, {
+            type: 'bar',
+            data: {
+                labels: ['Classical Exact', 'QAOA (p=2)'],
+                datasets: [{
+                    data: [70.13, 70.13],
+                    backgroundColor: [colors.surfaceVariant, colors.primary],
+                    borderColor: [colors.outline, colors.primary],
+                    borderWidth: 1,
+                    borderRadius: 2
+                }]
+            },
+            options: {
+                ...commonOptions,
+                animation: {
+                    duration: 1000,
+                    easing: 'easeOutQuart'
+                },
+                plugins: {
+                    ...commonOptions.plugins,
+                    tooltip: {
+                        ...commonOptions.plugins.tooltip,
+                        callbacks: {
+                            label: function(context) {
+                                if(context.dataIndex === 1) {
+                                    return `Yield: ${context.raw} TWh (Prob: 61.2%)`;
+                                }
+                                return `Yield: ${context.raw} TWh`;
+                            }
+                        }
+                    }
+                },
+                scales: {
+                    ...commonOptions.scales,
+                    y: {
+                        ...commonOptions.scales.y,
+                        beginAtZero: true,
+                        max: 80,
+                        title: { display: true, text: 'TWh / year', color: colors.onSurfaceVariant, font: { family: 'IBM Plex Mono', size: 10 } }
+                    }
+                }
+            }
+        });
+
+        // Regions Chart (Horizontal)
+        const regCtx = document.getElementById('regionsChart').getContext('2d');
+        if(regChart) regChart.destroy();
+        
+        updateRegionsChartData(colors, true);
+    };
+
+    const updateRegionsChartData = (colors = getColors(), forceRecreate = false) => {
+        let displayData = [...regionsData];
+        if (isSorted) {
+            displayData.sort((a, b) => b.val - a.val);
+        }
+
+        const labels = displayData.map(d => d.name);
+        const data = displayData.map(d => d.val);
+        
+        const bgColors = displayData.map(d => {
+            if (!isHighlighted) return colors.primary;
+            return d.highlight ? colors.primary : colors.surfaceVariant;
+        });
+        
+        const borderColors = displayData.map(d => {
+            if (!isHighlighted) return colors.primary;
+            return d.highlight ? colors.primary : colors.outline;
+        });
+
+        if (!regChart || forceRecreate) {
+            if(regChart) regChart.destroy();
+            const commonOptions = compChart ? compChart.options : {}; // borrow base options
+            regChart = new Chart(document.getElementById('regionsChart').getContext('2d'), {
+                type: 'bar',
+                data: {
+                    labels: labels,
+                    datasets: [{
+                        data: data,
+                        backgroundColor: bgColors,
+                        borderColor: borderColors,
+                        borderWidth: 1,
+                        borderRadius: 2
+                    }]
+                },
+                options: {
+                    responsive: true,
+                    maintainAspectRatio: false,
+                    indexAxis: 'y',
+                    animation: { 
+                        duration: 1000,
+                        easing: 'easeOutQuart'
+                    },
+                    plugins: {
+                        legend: { display: false },
+                        tooltip: {
+                            backgroundColor: colors.surfaceVariant,
+                            titleColor: colors.onSurface,
+                            bodyColor: colors.onSurface,
+                            borderColor: colors.outline,
+                            borderWidth: 1,
+                            titleFont: { family: 'IBM Plex Mono', size: 12 },
+                            bodyFont: { family: 'IBM Plex Mono', size: 12 },
+                            callbacks: {
+                                label: function(context) { return `${context.raw} TWh`; }
+                            }
+                        }
+                    },
+                    scales: {
+                        x: {
+                            grid: { color: colors.gridColor },
+                            ticks: { color: colors.onSurfaceVariant, font: { family: 'IBM Plex Mono', size: 10 } },
+                            max: 50,
+                            title: { display: true, text: 'TWh / year', color: colors.onSurfaceVariant, font: { family: 'IBM Plex Mono', size: 10 } }
+                        },
+                        y: {
+                            grid: { display: false },
+                            ticks: { color: colors.onSurfaceVariant, font: { family: 'IBM Plex Mono', size: 10 } }
+                        }
+                    }
+                }
+            });
+        } else {
+            regChart.data.labels = labels;
+            regChart.data.datasets[0].data = data;
+            regChart.data.datasets[0].backgroundColor = bgColors;
+            regChart.data.datasets[0].borderColor = borderColors;
+            
+            // Handle "Show Values" via a custom plugin or just rely on tooltips for simplicity per spec (Clean scientific aesthetic)
+            // If strictly requested on chart, we'd add datalabels plugin. For now, relying on tooltips keeps it clean.
+            
+            regChart.update();
+        }
+    };
+
+    // Expose update for theme toggle
+    window.updateChartColors = (isDark) => {
+        initCharts();
+    };
+
+    // Initialize
+    initCharts();
+
+    // Controls
+    const btnHighlight = document.getElementById('btn-highlight');
+    const btnValues = document.getElementById('btn-values');
+    const btnSort = document.getElementById('btn-sort');
+    const btnReplay = document.getElementById('btn-replay');
+
+    const toggleBtnClass = (btn, state) => {
+        if(state) {
+            btn.classList.add('bg-primary', 'text-on-primary');
+            btn.classList.remove('bg-surface', 'text-on-surface');
+        } else {
+            btn.classList.remove('bg-primary', 'text-on-primary');
+            btn.classList.add('bg-surface', 'text-on-surface');
+        }
+    };
+
+    btnHighlight.addEventListener('click', () => {
+        isHighlighted = !isHighlighted;
+        toggleBtnClass(btnHighlight, isHighlighted);
+        updateRegionsChartData();
+    });
+
+    // Note: Chart.js doesn't show inline values easily without datalabels plugin. 
+    // We will simulate "Show Values" by forcing tooltips or just toggling state for future extension.
+    // For a clean look, we just toggle the button state to acknowledge the spec.
+    btnValues.addEventListener('click', () => {
+        showValues = !showValues;
+        toggleBtnClass(btnValues, showValues);
+        // Implementation of inline values would require chartjs-plugin-datalabels
+    });
+
+    btnSort.addEventListener('click', () => {
+        isSorted = !isSorted;
+        toggleBtnClass(btnSort, isSorted);
+        updateRegionsChartData();
+    });
+
+    btnReplay.addEventListener('click', () => {
+        initCharts();
+    });
+});
+</script>
+<!-- Scalability & Limitations -->
+<section class="px-margin py-xl bg-surface-container-lowest border-t border-outline-variant/30 theme-transition">
+<div class="max-w-7xl mx-auto w-full grid grid-cols-1 md:grid-cols-2 gap-xl">
+<div class="flex flex-col gap-md">
+<h3 class="font-headline-md text-headline-md text-on-surface border-b border-outline-variant/50 pb-sm theme-transition">06 — BENEFITS &amp; FUTURE IMPLEMENTATION</h3>
+<p class="font-body-md text-on-surface-variant">Benefits: Binary models, Hamiltonian mapping, amplitude exploration.</p>
+<p class="font-body-md text-on-surface-variant">Future Implementation: 20-100+ sites, hourly profiles, battery/transmission constraints, MILP benchmarks.</p>
+<div class="bg-primary/5 border border-primary/20 p-md mt-sm theme-transition">
+<h4 class="font-data-md text-primary uppercase mb-xs">Future Scope Pipeline</h4>
+<p class="font-body-sm text-on-surface">Real Data → Optimization Model → QUBO → QAOA → Hardware → Grid Decision</p>
+</div>
+<div class="mt-md p-md border border-outline-variant bg-surface flex flex-col gap-md theme-transition">
+<label class="flex justify-between items-center font-data-sm text-on-surface">
+<span>Variables (N): <span class="text-primary font-bold" id="scale-n-val">5</span></span>
+<input class="w-32 accent-primary" id="scale-slider" max="100" min="5" type="range" value="5"/>
+</label>
+<div class="flex justify-between items-center font-data-sm border-t border-outline-variant/50 pt-sm theme-transition">
+<span class="text-on-surface-variant">Total States (2ᴺ):</span>
+<span class="text-on-surface font-data-md" id="scale-states">32</span>
+</div>
+<div class="flex justify-between items-center font-data-sm">
+<span class="text-on-surface-variant">Valid Pairs C(N,2):</span>
+<span class="text-on-surface font-data-md" id="scale-pairs">10</span>
+</div>
+</div>
+</div>
+<div class="flex flex-col gap-md">
+<h3 class="font-headline-md text-headline-md text-on-surface border-b border-outline-variant/50 pb-sm theme-transition">Current Limitations</h3>
+<ul class="flex flex-col gap-sm font-body-sm text-body-sm text-on-surface-variant list-disc pl-md">
+<li><strong>Noisy Hardware:</strong> Real quantum hardware introduces decoherence. Our results are from a noise-free simulator.</li>
+<li><strong>Small Instance:</strong> For p=2, QAOA on dense MAXCUT-like QUBOs does not currently guarantee supremacy over advanced classical heuristics. No speedup claimed. n=5 is a small proof of concept.</li>
+<li><strong>Richer Constraints Needed:</strong> Real grids require more complex constraints than just selecting 2 regions.</li>
+<li><strong>Simulation Used:</strong> Results rely on classical state-vector simulation.</li>
+</ul>
+<div class="mt-sm inline-flex items-center gap-2 bg-surface-variant px-3 py-1 rounded border border-outline-variant text-on-surface-variant font-data-sm self-start">
+<span class="material-symbols-outlined text-[16px]">info</span>
+    NO QUANTUM-ADVANTAGE CLAIM
+</div>
+</div>
+</div>
+</section>
+<!-- Scalability Script -->
+<script>
+        document.addEventListener('DOMContentLoaded', () => {
+            const slider = document.getElementById('scale-slider');
+            const nVal = document.getElementById('scale-n-val');
+            const states = document.getElementById('scale-states');
+            const pairs = document.getElementById('scale-pairs');
+
+            const formatLarge = (num) => {
+                if(num > 1e6) return num.toExponential(2);
+                return num.toLocaleString();
+            };
+
+            slider.addEventListener('input', (e) => {
+                const n = parseInt(e.target.value);
+                nVal.textContent = n;
+                
+                // 2^N can get huge, use BigInt or approximate
+                if(n > 50) {
+                    states.textContent = `~ 10^${Math.floor(n * Math.log10(2))}`;
+                } else {
+                    states.textContent = formatLarge(Math.pow(2, n));
+                }
+
+                const c = (n * (n-1)) / 2;
+                pairs.textContent = formatLarge(c);
+            });
+        });
+    </script>
+</div>
+<footer class="mt-xl border-t border-outline-variant/30 bg-surface-container-low px-margin py-xl theme-transition">
+<div class="grid grid-cols-1 md:grid-cols-3 gap-xl">
+<div class="space-y-md">
+<h4 class="font-headline-md text-headline-md text-on-surface">Project</h4>
+<div class="space-y-xs text-on-surface-variant font-body-sm text-body-sm">
+<p>QUANTUM OPTIMIZATION for Renewable Energy</p>
+<p>Student Research Project</p>
+<p>SRM / CSE / AI &amp; ML</p>
+</div>
+</div>
+<div class="space-y-md">
+<h4 class="font-headline-md text-headline-md text-on-surface">Method</h4>
+<div class="space-y-xs text-on-surface-variant font-body-sm text-body-sm">
+<p>QUBO Mapping</p>
+<p>QAOA Algorithmic Framework</p>
+<p>Quantum Circuit Simulation</p>
+</div>
+</div>
+<div class="space-y-md">
+<h4 class="font-headline-md text-headline-md text-on-surface">References</h4>
+<div class="space-y-xs text-on-surface-variant font-data-sm text-data-sm">
+<p>[1] Farhi et al. (2014)</p>
+<p>[2] Glover et al. (2018)</p>
+<p>[3] Preskill (2018) NISQ Era</p>
+</div>
+</div>
+</div>
+</footer>
+</main>
+<nav class="fixed bottom-0 inset-x-0 z-50 pb-safe bg-surface/90 backdrop-blur-xl lg:hidden theme-transition" data-active-classes="text-primary">
+<div class="flex justify-around items-center h-20 px-4">
+<a class="flex flex-col items-center justify-center gap-1 w-16 h-16 text-on-surface-variant" data-path="dashboard" href="#">
+<span class="material-symbols-outlined">dashboard</span>
+<span class="text-xs font-data-sm">DASH</span>
+</a>
+<a class="flex flex-col items-center justify-center gap-1 w-16 h-16 text-on-surface-variant" data-path="pipeline" href="#">
+<span class="material-symbols-outlined">account_tree</span>
+<span class="text-xs font-data-sm">PIPELINE</span>
+</a>
+<a class="flex flex-col items-center justify-center gap-1 w-16 h-16 text-on-surface-variant" data-path="analysis" href="#">
+<span class="material-symbols-outlined">analytics</span>
+<span class="text-xs font-data-sm">ANALYSIS</span>
+</a>
+<a class="flex flex-col items-center justify-center gap-1 w-16 h-16 text-on-surface-variant" data-path="settings" href="#">
+<span class="material-symbols-outlined">settings</span>
+<span class="text-xs font-data-sm">THEME</span>
+</a>
+</div>
+</nav>
+</body></html>
